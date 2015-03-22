@@ -179,6 +179,7 @@
                 catch (HttpListenerException ex)
                 {
                     Debug.WriteLine(ex.Message);
+                    throw;
                 }
             }
         }
