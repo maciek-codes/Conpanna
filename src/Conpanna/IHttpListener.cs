@@ -11,6 +11,7 @@
         void Stop();
 
         IHttpContext GetContext();
+
         void Close();
     }
 }
