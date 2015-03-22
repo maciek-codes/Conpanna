@@ -11,6 +11,7 @@
             Assert.Equal(Method.Get, MethodHelper.FromString("get"));
             Assert.Equal(Method.Get, MethodHelper.FromString("GET"));
             Assert.Equal(Method.Post, MethodHelper.FromString("POST "));
+            Assert.Equal(Method.Invalid, MethodHelper.FromString("abc"));
         }
 
         [Fact]
@@ -18,7 +19,6 @@
         {
             Assert.Throws(typeof(ArgumentNullException), () => MethodHelper.FromString(null));
             Assert.Throws(typeof(ArgumentException), () => MethodHelper.FromString(""));
-            Assert.Throws(typeof(ArgumentException), () => MethodHelper.FromString("ABCDK"));
         }
     }
 }
