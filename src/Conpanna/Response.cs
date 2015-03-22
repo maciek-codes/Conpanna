@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Conpanna
+﻿namespace Conpanna
 {
     /// <summary>
     /// Response object

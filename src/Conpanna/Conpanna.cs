@@ -166,10 +166,12 @@
                         {
                             context.Response.Send("Cannot {0} {1}", context.Request.Method, context.Request.OriginalUrl);
                         }
-
-                        foreach (var handler in handlers)
+                        else
                         {
-                            handler(context.Request, context.Response);
+                            foreach (var handler in handlers)
+                            {
+                                handler(context.Request, context.Response);
+                            }
                         }
 
                         // Now, close the response stream
