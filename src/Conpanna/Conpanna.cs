@@ -1,16 +1,13 @@
 ﻿namespace Conpanna
 {
-	using System;
-	using System.Diagnostics;
-	using System.Net;
-	using System.Threading;
+    using System;
+    using System.Diagnostics;
+    using System.Net;
+    using System.Threading;
 
     using HttpWrapper;
     using SimpleInjector;
 
-    /// <summary>
-    /// Conpanna server
-    /// </summary>
     public class Conpanna : IDisposable
     {
         private readonly Container _container;
@@ -41,11 +38,11 @@
             _httpThread = new Thread(new ThreadStart(_handler.HandleTcp));
         }
 
-				/// <summary>
-				/// Create route handler for GET request
-				/// </summary>
-				/// <param name="routeName"></param>
-				/// <param name="handle"></param>
+        /// <summary>
+        /// Create route handler for GET request
+        /// </summary>
+        /// <param name="routeName"></param>
+        /// <param name="handle"></param>
         public void Get(string routeName, Action<Request, Response> handle)
         {
             _router.Add(Method.GET, routeName, handle);
@@ -71,19 +68,19 @@
             _router.Add(Method.DELETE, routeName, handle);
         }
 
-				/// <summary>
-				/// Start listening
-				/// </summary>
-				/// <param name="host"></param>
-				/// <param name="port"></param>
-				/// <param name="ListenCallback"></param>
-        public void Listen(string host, int port, Action ListenCallback = null)
+        /// <summary>
+        /// Start listening
+        /// </summary>
+        /// <param name="host"></param>
+        /// <param name="port"></param>
+        /// <param name="listenCallback"></param>
+        public void Listen(string host, int port, Action listenCallback = null)
         {
-						if (!HttpListener.IsSupported)
-						{
-							Console.WriteLine("Windows XP SP2 or Server 2003 is required to use the HttpListener class.");
-							return;
-						}
+            if (!HttpListener.IsSupported)
+            {
+                Console.WriteLine("Windows XP SP2 or Server 2003 is required to use the HttpListener class.");
+                return;
+            }
 
             // Create a listener.
             _listener = _container.GetInstance<IHttpListener>();
@@ -97,9 +94,9 @@
             _httpThread.Start();
             _httpThread.IsBackground = true;
 
-            if (ListenCallback != null)
+            if (listenCallback != null)
             {
-                ListenCallback();
+                listenCallback();
             }
         }
 
@@ -108,6 +105,11 @@
         /// </summary>
         public void Close()
         {
+            if(!IsListening)
+            {
+                return;
+            }
+
             IsListening = false;
             _listener.Close();
             _httpThread.Join();
@@ -120,15 +122,15 @@
         /// <param name="port"></param>
         /// <returns></returns>
         private string CreatePrefix(string host, int port)
-				{
-						if (!host.StartsWith("https://") && !host.StartsWith("http://"))
-						{
-							host = "http://" + host;
-						}
+        {
+            if (!host.StartsWith("https://") && !host.StartsWith("http://"))
+            {
+                host = "http://" + host;
+            }
 
-						host += ":" + port.ToString() + "/";
+            host += ":" + port.ToString() + "/";
 
-						return host;
+            return host;
         }
 
         /// <summary>
@@ -136,15 +138,15 @@
         /// </summary>
         private class HttpHandler
         {
-						private readonly Conpanna _conpanna;
+            private readonly Conpanna _conpanna;
 
             /// <summary>
             /// Create new handler
             /// </summary>
             /// <param name="conpanna"></param>
-						public HttpHandler(Conpanna conpanna)
+            public HttpHandler(Conpanna conpanna)
             {
-								_conpanna = conpanna;
+                _conpanna = conpanna;
             }
 
             /// <summary>
@@ -152,15 +154,15 @@
             /// </summary>
             public void HandleTcp()
             {
-								try
-								{
-										while (_conpanna.IsListening)
-										{
-												var context = _conpanna._listener.GetContext();
+                try
+                {
+                    while (_conpanna.IsListening)
+                    {
+                        var context = _conpanna._listener.GetContext();
                         var method = MethodHelper.FromString(context.Request.Method);
                         var handlers = _conpanna._router.Get(method, context.Request.OriginalUrl);
 
-                        if(handlers == null)
+                        if (handlers == null)
                         {
                             context.Response.Send("Cannot {0} {1}", context.Request.Method, context.Request.OriginalUrl);
                         }
@@ -172,13 +174,13 @@
 
                         // Now, close the response stream
                         context.Response.Close();
-										}
-								}
-								catch (HttpListenerException ex)
-								{
-									Debug.WriteLine(ex.Message);
-								}
-						}
+                    }
+                }
+                catch (HttpListenerException ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            }
         }
 
         #region IDisposable
@@ -195,7 +197,7 @@
         // The bulk of the clean-up code is implemented in Dispose(bool)
         protected virtual void Dispose(bool disposing)
         {
-            if(disposing)
+            if (disposing)
             {
                 Close();
             }
