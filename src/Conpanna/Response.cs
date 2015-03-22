@@ -38,7 +38,7 @@ namespace Conpanna
             var buffer = System.Text.Encoding.UTF8.GetBytes(format);
 
             // Get a response stream and write the response to it.
-            _response.ContentLength64 = buffer.Length;
+            _response.ContentLength = buffer.Length;
             _response.OutputStream.Write(buffer, 0, buffer.Length);
         }
 

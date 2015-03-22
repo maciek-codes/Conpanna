@@ -10,7 +10,7 @@
         /// <summary>
         /// Response content length
         /// </summary>
-        long ContentLength64 { get; set; }
+        long ContentLength { get; set; }
 
         /// <summary>
         /// Response output stream

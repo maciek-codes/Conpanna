@@ -13,7 +13,7 @@
             _response = response;
         }
 
-        public long ContentLength64
+        public long ContentLength
         {
             get
             {
