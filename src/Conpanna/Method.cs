@@ -1,7 +1,5 @@
 ﻿namespace Conpanna
 {
-    using System;
-
     internal enum Method
     {
         Get,
