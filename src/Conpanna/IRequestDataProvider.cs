@@ -2,6 +2,7 @@
 {
     internal interface IRequestDataProvider
     {
+        /// <summary>
         /// Gets request method
         /// </summary>
         string Method { get; }
