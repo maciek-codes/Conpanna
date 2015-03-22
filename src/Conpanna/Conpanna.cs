@@ -41,11 +41,11 @@
             _httpThread = new Thread(new ThreadStart(_handler.HandleTcp));
         }
 
-		/// <summary>
-		/// Create route handler for GET request
-		/// </summary>
-		/// <param name="routeName"></param>
-		/// <param name="handle"></param>
+				/// <summary>
+				/// Create route handler for GET request
+				/// </summary>
+				/// <param name="routeName"></param>
+				/// <param name="handle"></param>
         public void Get(string routeName, Action<Request, Response> handle)
         {
             _router.Add(Method.GET, routeName, handle);
@@ -71,23 +71,23 @@
             _router.Add(Method.DELETE, routeName, handle);
         }
 
-		/// <summary>
-		/// Start listening
-		/// </summary>
-		/// <param name="host"></param>
-		/// <param name="port"></param>
-		/// <param name="ListenCallback"></param>
+				/// <summary>
+				/// Start listening
+				/// </summary>
+				/// <param name="host"></param>
+				/// <param name="port"></param>
+				/// <param name="ListenCallback"></param>
         public void Listen(string host, int port, Action ListenCallback = null)
         {
-			if (!HttpListener.IsSupported)
-			{
-				Console.WriteLine("Windows XP SP2 or Server 2003 is required to use the HttpListener class.");
-				return;
-			}
+						if (!HttpListener.IsSupported)
+						{
+							Console.WriteLine("Windows XP SP2 or Server 2003 is required to use the HttpListener class.");
+							return;
+						}
 
             // Create a listener.
             _listener = _container.GetInstance<IHttpListener>();
-            
+
             var hostPrefix = CreatePrefix(host, port);
 
             _listener.Prefixes.Add(hostPrefix);
@@ -120,15 +120,15 @@
         /// <param name="port"></param>
         /// <returns></returns>
         private string CreatePrefix(string host, int port)
-		{
-			if (!host.StartsWith("https://") && !host.StartsWith("http://"))
-			{
-				host = "http://" + host;
-			}
+				{
+						if (!host.StartsWith("https://") && !host.StartsWith("http://"))
+						{
+							host = "http://" + host;
+						}
 
-			host += ":" + port.ToString() + "/";
+						host += ":" + port.ToString() + "/";
 
-			return host;
+						return host;
         }
 
         /// <summary>
@@ -136,15 +136,15 @@
         /// </summary>
         private class HttpHandler
         {
-			private readonly Conpanna _conpanna;
+						private readonly Conpanna _conpanna;
 
             /// <summary>
             /// Create new handler
             /// </summary>
             /// <param name="conpanna"></param>
-			public HttpHandler(Conpanna conpanna)
+						public HttpHandler(Conpanna conpanna)
             {
-				_conpanna = conpanna;
+								_conpanna = conpanna;
             }
 
             /// <summary>
@@ -152,11 +152,11 @@
             /// </summary>
             public void HandleTcp()
             {
-				try
-				{
-					while (_conpanna.IsListening)
-					{
-						var context = _conpanna._listener.GetContext();
+								try
+								{
+										while (_conpanna.IsListening)
+										{
+												var context = _conpanna._listener.GetContext();
                         var method = MethodHelper.FromString(context.Request.Method);
                         var handlers = _conpanna._router.Get(method, context.Request.OriginalUrl);
 
@@ -172,16 +172,16 @@
 
                         // Now, close the response stream
                         context.Response.Close();
-					}
-				}
-				catch (HttpListenerException ex)
-				{
-					Debug.WriteLine(ex.Message);
-				}
-			}
+										}
+								}
+								catch (HttpListenerException ex)
+								{
+									Debug.WriteLine(ex.Message);
+								}
+						}
         }
 
-        #region IDisposable 
+        #region IDisposable
 
         /// <summary>
         /// Close the listener

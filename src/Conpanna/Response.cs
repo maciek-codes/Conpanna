@@ -13,18 +13,18 @@ namespace Conpanna
         /// Wraps an instance of <see cref="HttpListenerResponse"/>
         /// </summary>
         internal Response(IResponseDataProvider response)
-		{
-			_response = response;
-		}
+        {
+            _response = response;
+        }
 
-		/// <summary>
-		/// Send HTTP response
-		/// </summary>
-		/// <param name="body">Response body</param>
-		public void Send(string body)
+        /// <summary>
+        /// Send HTTP response
+        /// </summary>
+        /// <param name="body">Response body</param>
+        public void Send(string body)
         {
             Send(body, null);
-		}
+        }
 
         public void Send(string format, params object[] args)
         {
