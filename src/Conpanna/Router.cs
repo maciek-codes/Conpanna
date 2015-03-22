@@ -10,6 +10,16 @@
 
         internal void Add(Method method, string routeName, Action<Request, Response> handle)
         {
+            if(method == Method.Invalid)
+            {
+                throw new ArgumentException("Invalid method", "routeName");
+            }
+
+            if(string.IsNullOrWhiteSpace(routeName))
+            {
+                throw new ArgumentException("Route name cannot be empty", "routeName");
+            }
+
             if (_routes.ContainsKey(routeName))
             {
                 _routes[routeName].Add(new Route(method, handle));

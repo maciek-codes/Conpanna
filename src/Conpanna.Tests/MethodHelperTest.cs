@@ -8,9 +8,9 @@
         [Fact]
         void MethodHelperConvertsStringToEnum()
         {
-            Assert.Equal(Method.GET, MethodHelper.FromString("get"));
-            Assert.Equal(Method.GET, MethodHelper.FromString("GET"));
-            Assert.Equal(Method.POST, MethodHelper.FromString("POST "));
+            Assert.Equal(Method.Get, MethodHelper.FromString("get"));
+            Assert.Equal(Method.Get, MethodHelper.FromString("GET"));
+            Assert.Equal(Method.Post, MethodHelper.FromString("POST "));
         }
 
         [Fact]

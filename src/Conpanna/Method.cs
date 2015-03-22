@@ -4,10 +4,11 @@
 
     internal enum Method
     {
-        GET,
-        DELETE,
-        POST,
-        PUT
+        Get,
+        Delete,
+        Post,
+        Put,
+        Invalid
     }
 
     internal static class MethodHelper

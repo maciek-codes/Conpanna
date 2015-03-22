@@ -45,12 +45,12 @@
         /// <param name="handle"></param>
         public void Get(string routeName, Action<Request, Response> handle)
         {
-            _router.Add(Method.GET, routeName, handle);
+            _router.Add(Method.Get, routeName, handle);
         }
 
         public void Post(string routeName, Action<Request, Response> handle)
         {
-            _router.Add(Method.POST, routeName, handle);
+            _router.Add(Method.Post, routeName, handle);
         }
 
         /// <summary>
@@ -60,12 +60,12 @@
         /// <param name="handle"></param>
         public void Put(string routeName, Action<Request, Response> handle)
         {
-            _router.Add(Method.PUT, routeName, handle);
+            _router.Add(Method.Put, routeName, handle);
         }
 
         public void Delete(string routeName, Action<Request, Response> handle)
         {
-            _router.Add(Method.DELETE, routeName, handle);
+            _router.Add(Method.Delete, routeName, handle);
         }
 
         /// <summary>
